@@ -1,3 +1,16 @@
+.vs/
+ApiDesafio/bin/
+ApiDesafio/obj/ApiDesafio.csproj.nuget.dgspec.json
+ApiDesafio/obj/ApiDesafio.csproj.nuget.g.props
+ApiDesafio/obj/project.assets.json
+ApiDesafio/obj/project.nuget.cache
+ApiDesafio/obj/Debug/netcoreapp3.1/ApiDesafio.assets.cache
+ApiDesafio/obj/Debug/netcoreapp3.1/ApiDesafio.csproj.CoreCompileInputs.cache
+ApiDesafio/obj/Debug/netcoreapp3.1/ApiDesafio.csproj.FileListAbsolute.txt
+ApiDesafio/obj/Debug/netcoreapp3.1/ApiDesafio.dll
+ApiDesafio/obj/Debug/netcoreapp3.1/ApiDesafio.pdb
+
+
 
 # Created by https://www.toptal.com/developers/gitignore/api/aspnetcore
 # Edit at https://www.toptal.com/developers/gitignore?templates=aspnetcore

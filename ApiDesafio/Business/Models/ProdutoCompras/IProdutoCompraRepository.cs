@@ -1,4 +1,5 @@
 ﻿using ApiDesafio.Business.Core.Data;
+using ApiDesafio.Business.Models.Compras;
 using System;
 using System.Collections.Generic;
 using System.Linq;

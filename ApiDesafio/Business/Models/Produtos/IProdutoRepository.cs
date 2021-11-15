@@ -8,5 +8,6 @@ namespace ApiDesafio.Business.Models.Produtos
 {
     public interface IProdutoRepository : IRepository<Produto>
     {
+        Task<bool> Existe(int produtoId);
     }
 }

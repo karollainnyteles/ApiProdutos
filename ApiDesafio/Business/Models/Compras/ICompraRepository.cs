@@ -8,5 +8,7 @@ namespace ApiDesafio.Business.Models.Compras
 {
     public interface ICompraRepository : IRepository<Compra>
     {
+        Task<List<Compra>> ObterTodosComProdutos();
+        Task<Compra> ObterComProdutosPorId(int compraId);
     }
 }

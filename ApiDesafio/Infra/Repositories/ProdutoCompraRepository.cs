@@ -1,4 +1,5 @@
-﻿using ApiDesafio.Business.Models.ProdutoCompras;
+﻿using ApiDesafio.Business.Models.Compras;
+using ApiDesafio.Business.Models.ProdutoCompras;
 using ApiDesafio.Infra.Data.Context;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -18,5 +19,7 @@ namespace ApiDesafio.Infra.Repositories
         {
             return await Db.ProdutoCompra.AnyAsync(p => p.ProdutoId == produtoId);
         }
+
+      
     }
 }

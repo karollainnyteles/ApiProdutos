@@ -2,7 +2,6 @@ using ApiDesafio.Business.Core.Notificacoes;
 using ApiDesafio.Business.Models.Compras;
 using ApiDesafio.Business.Models.ProdutoCompras;
 using ApiDesafio.Business.Models.Produtos;
-using ApiDesafio.Business.Models.Produtos.Services;
 using ApiDesafio.Infra.Data.Context;
 using ApiDesafio.Infra.Repositories;
 using MediatR;
@@ -46,16 +45,14 @@ namespace ApiDesafio
 
 
             services.AddScoped<INotificador, Notificador>();
-            services.AddScoped<IProdutoService, ProdutoService>();
-
 
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo
                 {
                     Version = "v1",
-                    Title = "ToDo API",
-                    Description = "A simple example ASP.NET Core Web API",
+                    Title = "Desafio API com Mediatr e Docker",
+                    Description = "Api desenvolvida com a finalidade de estudo",
                 });
 
                 //var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
@@ -64,7 +61,8 @@ namespace ApiDesafio
             });
 
             services.AddMediatR(typeof(Startup));
-            services.AddControllers();
+            services.AddControllers()
+                        .AddNewtonsoftJson(options => options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -80,13 +78,13 @@ namespace ApiDesafio
 
             // Enable middleware to serve generated Swagger as a JSON endpoint.
             app.UseSwagger();
-            
-            
+
+
             // Enable middleware to serve swagger-ui (HTML, JS, CSS, etc.),
             // specifying the Swagger JSON endpoint.
             app.UseSwaggerUI(c =>
             {
-                c.SwaggerEndpoint("/swagger/v1/swagger.json", "My API V1");
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "Desafio API V1");
             });
 
 

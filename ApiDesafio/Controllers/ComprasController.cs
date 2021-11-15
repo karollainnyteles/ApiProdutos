@@ -1,6 +1,6 @@
-﻿using ApiDesafio.Business.Commands.Produtos;
+﻿using ApiDesafio.Business.Commands.Compras;
 using ApiDesafio.Business.Core.Notificacoes;
-using ApiDesafio.Business.Models.Produtos;
+using ApiDesafio.Business.Models.Compras;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -11,44 +11,43 @@ using System.Threading.Tasks;
 namespace ApiDesafio.Controllers
 {
     [ApiController]
-    [Route("api/produtos")]
-    public class ProdutosController : ControllerBase
+    [Route("api/compras")]
+    public class ComprasController : ControllerBase
     {
         private readonly IMediator _mediator;
-        private readonly IProdutoRepository _produtoRepository;
+        private readonly ICompraRepository _comprasRepository;
         private readonly INotificador _notificador;
 
 
-        public ProdutosController(IProdutoRepository produtoRepository, INotificador notificador, IMediator mediator)
+        public ComprasController(ICompraRepository compraRepository, INotificador notificador, IMediator mediator)
         {
-            _produtoRepository = produtoRepository;
+            _comprasRepository = compraRepository;
             _notificador = notificador;
             _mediator = mediator;
         }
 
-
         [HttpGet]
         public async Task<IActionResult> ObterTodos()
         {
-            return Ok(await _produtoRepository.ObterTodos());
+            return Ok(await _comprasRepository.ObterTodosComProdutos());
         }
 
         [HttpGet("{id}")]
         public async Task<IActionResult> ObterPorId(int id)
         {
-            var produto = await _produtoRepository.ObterPorId(id);
-            if(produto is null)
+            var compra = await _comprasRepository.ObterComProdutosPorId(id);
+            if (compra is null)
             {
                 return NotFound();
             }
 
-            return Ok(produto);
+            return Ok(compra);
         }
 
         [HttpPost]
-        public async Task<IActionResult> Adicionar(ProdutoAdicionarCommand produto)
+        public async Task<IActionResult> Adicionar(CompraAdicionarCommand compra)
         {
-            var response = await _mediator.Send(produto);
+            var response = await _mediator.Send(compra);
 
             if (_notificador.TemNotificacao())
             {
@@ -58,45 +57,46 @@ namespace ApiDesafio.Controllers
             return CreatedAtAction(nameof(ObterPorId), new { response.Id }, response);
         }
 
-        [HttpPut("{id}")]
-        public async Task<IActionResult> Atualizar(int id, [FromBody] ProdutoAtualizarCommand produto)
-        {
-            var produtoEditavel = await _produtoRepository.ObterPorId(id);
-            if (produtoEditavel is null)
-            {
-                return NotFound();
-            }
-
-            var mensagem = await _mediator.Send(produto);
-
-            if (_notificador.TemNotificacao())
-            {
-                return BadRequest(_notificador.ObterNotificacoes());
-            }
-
-            return Ok(mensagem);
-        }
-
         [HttpDelete("{id}")]
         public async Task<IActionResult> Remover(int id)
         {
-            var produto = await _produtoRepository.ObterPorId(id);
-            if (produto is null)
+            var compra = await _comprasRepository.ObterPorId(id);
+            if (compra is null)
             {
                 return NotFound();
             }
 
-            var request = new ProdutoRemoverCommand();
+            var request = new CompraRemoverCommand();
             request.Id = id;
 
-            await _mediator.Send(request);
+            var response = await _mediator.Send(request);
 
             if (_notificador.TemNotificacao())
             {
                 return BadRequest(_notificador.ObterNotificacoes());
             }
 
-            return Ok(produto);
+            return Ok(response);
+        }
+
+        [HttpPut]
+        public async Task<IActionResult> Atualizar(CompraAtualizarCommand compra)
+        {
+
+            var compraAtualizar = await _comprasRepository.ObterPorId(compra.CompraId);
+            if (compraAtualizar is null)
+            {
+                return NotFound();
+            }
+
+            var response = await _mediator.Send(compra);
+
+            if (_notificador.TemNotificacao())
+            {
+                return BadRequest(_notificador.ObterNotificacoes());
+            }
+
+            return Ok(response);
         }
     }
 }
