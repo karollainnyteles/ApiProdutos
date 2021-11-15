@@ -1,0 +1,15 @@
+version: "3.4"
+
+services:
+
+  sql-server:
+    image: mcr.microsoft.com/mssql/server:2017-latest
+    container_name : sql-server
+    environment:
+      - SA_PASSWORD=Pass@word
+      - ACCEPT_EULA=Y
+    ports:
+      - "5434:1433"
+    volumes:
+      - .\sqlData:/var/opt/mssql/data
+    
