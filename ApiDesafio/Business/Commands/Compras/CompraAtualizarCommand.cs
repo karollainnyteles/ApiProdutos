@@ -11,6 +11,6 @@ namespace ApiDesafio.Business.Commands.Compras
     {
         public int CompraId { get; set; }
         public List<int> ProdutosIdRemover { get; set; }
-        public List<int> ProdutosIdAtualizar { get; set; }
+        public List<int> ProdutosIdAdicionar { get; set; }
     }
 }

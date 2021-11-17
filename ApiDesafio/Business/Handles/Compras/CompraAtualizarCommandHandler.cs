@@ -36,7 +36,7 @@ namespace ApiDesafio.Business.Handles.Compras
                     await _produtoCompraRepository.Remover(idRemover);
             }
 
-            foreach (var idAdicionar in request.ProdutosIdAtualizar)
+            foreach (var idAdicionar in request.ProdutosIdAdicionar)
             {
                var produto = await _produtoRepository.ObterPorId(idAdicionar);
                 if (produto != null)
